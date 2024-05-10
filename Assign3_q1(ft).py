@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[3]:
-
-
 #Coded by: Yash Vardhan
 
 import numpy as np
@@ -49,6 +43,7 @@ plt.xlabel("x")
 plt.ylabel("sinc(x)")
 plt.grid()
 plt.title("Plot of Sinc(x)")
+plt.legend()
 #plt.savefig("Plot of Sinc(x)")
 plt.show()
 
@@ -66,8 +61,7 @@ plt.plot(np.sort(k_arr),sort_with_order(k_arr,rect_func((k_arr))),label="Analyti
 plt.grid()
 plt.xlabel("k")
 plt.ylabel("f'(k)")
-plt.title("FT of sinc function")
-#plt.savefig("FT of sinc function")
 plt.legend()
+plt.title("FT of sinc function")
+plt.savefig("FT of sinc function")
 plt.show()
-
