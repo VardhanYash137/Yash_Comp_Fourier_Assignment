@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[16]:
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -19,7 +13,7 @@ def plot_3d(X,Y,Z,title):
     ax.set_ylabel('Y')
     ax.set_zlabel('f(x, y)')
     ax.set_title(title)
-    plt.savefig("2D Gaussian")
+    #plt.savefig("2D Gaussian")
     # Show plot
     plt.show()
 
@@ -39,8 +33,8 @@ def analytic_FT(u,v,key=0):
     
 
 # Generate x and y values
-N=int(128)
-M=int(128)
+N=int(256)
+M=int(256)
 x = np.linspace(-10,10, N)
 y = np.linspace(-10, 10, M)
 dx=x[1]-x[0]
@@ -51,7 +45,7 @@ Z_mat=f1(x,y,key=1)
 plot_3d(X,Y,Z,"Plot of e^(-(x^2+y^2))")
 
 # Compute the numerical Fourier transform
-Z_fft = (np.fft.fft2((Z_mat)))
+Z_fft = (np.fft.fft2((Z_mat),norm="ortho"))
 k_x = 2*np.pi*(np.fft.fftfreq(N, dx))
 k_y = 2*np.pi*(np.fft.fftfreq(M, dy))
 
@@ -60,7 +54,7 @@ Z_fft1=np.zeros((N,M))
 for q in range(N):
     for r in range(M):
         phase_factor=(-1j)*((k_x[q]*(x[0]))+(k_y[r]*(y[0])))
-        Z_fft1[q][r]=np.abs(((dx*dy)/(2*np.pi))*np.exp(phase_factor)*Z_fft[q][r])
+        Z_fft1[q][r]=np.abs(((dx*dy)/(2*np.pi))*np.exp(phase_factor)*Z_fft[q][r])*np.sqrt(N*M)
         
 # Compute the analytical Fourier transform
 U, V = np.meshgrid(k_x,k_y)
@@ -74,7 +68,6 @@ axes[0].set_title('Numerical Fourier Transform')
 axes[0].set_xlabel('Frequency (k_x)')
 axes[0].set_ylabel('Frequency (k_y)')
 axes[0].set_zlabel('Magnitude')
-plt.savefig("q10 Numerical FT")
 
 # Analytical Fourier Transform
 axes[1].plot_surface(U, V, analytic_FT(U,V), cmap='plasma')
@@ -82,16 +75,9 @@ axes[1].set_title('Analytical Fourier Transform')
 axes[1].set_xlabel('Frequency (k_x)')
 axes[1].set_ylabel('Frequency (k_y)')
 axes[1].set_zlabel('Magnitude')
-plt.savefig("q10 Analytic FT")
+#plt.savefig("q10 Analytic FT")
 
 plt.tight_layout()
 plt.show()
-
-
-
-
-# In[ ]:
-
-
 
 
