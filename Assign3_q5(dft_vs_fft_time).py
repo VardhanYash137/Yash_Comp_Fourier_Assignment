@@ -52,14 +52,14 @@ pd.DataFrame(mat,columns=["dft k","fft k","dft","fft"])
 
 
 #comparing time taken by two algorithm
+#comparing time taken by two algorithm
 dft_time_arr=[]
 fft_time_arr=[]
-power_arr=range(2,11,1)
-for power in power_arr:    
+n_arr=np.arange(4,101,1)
+for n in n_arr:    
     #Parameters of Program
     x_min = -5
     x_max = 5
-    n = 2**power
     dx = (x_max-x_min)/(n-1)
     x_arr=np.arange(x_min,x_max+dx,dx,float)
     f_x=np.sin(x_arr)
@@ -76,9 +76,9 @@ for power in power_arr:
     time_fft=end_time-start_time
     fft_time_arr.append(time_fft)
     
-plt.plot(power_arr,dft_time_arr,label="dft time")
-plt.plot(power_arr,fft_time_arr,label="fft time")
-plt.xlabel("2^n elements")
+plt.plot(n_arr,dft_time_arr,label="dft time")
+plt.plot(n_arr,fft_time_arr,label="fft time")
+plt.xlabel("n elements")
 plt.ylabel("time(s)")
 plt.grid()
 plt.legend()
@@ -88,17 +88,3 @@ plt.show()
 
 
     
-        
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
