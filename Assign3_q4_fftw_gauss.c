@@ -7,7 +7,7 @@
 
 
 
-#define NUM_POINTS 256
+#define NUM_POINTS 128
 
 double gaussian(double x) {
     return exp(-x * x);
@@ -135,8 +135,8 @@ fftw_complex* calculate_dft(double *input, int size) {
 
 int main() {
     // Define the range of x values
-    double x_min = -10.0;
-    double x_max = 10.0;
+    double x_min = -20.0;
+    double x_max = 20.0;
     double step = (x_max - x_min) / (NUM_POINTS - 1);
 
     // Arrays to store x and y values
@@ -195,6 +195,10 @@ int main() {
     fftw_free(dft);
 
     for (int i = 0; i < NUM_POINTS; i++) {
+      printf(" %.5lf\n", creal(FT_values[i]) );
+    }
+
+    for (int i = 0; i < NUM_POINTS; i++) {
       FT[i]=creal(FT_values[i]) ;
 	
     }
@@ -205,5 +209,4 @@ int main() {
 
     return 0;
 }
-
 
