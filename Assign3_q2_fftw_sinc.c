@@ -7,7 +7,7 @@
 
 
 
-#define NUM_POINTS 256
+#define NUM_POINTS 128
 
 double sinc(double x) {
     if (x == 0.0) {
@@ -142,8 +142,8 @@ fftw_complex* calculate_dft(double *input, int size) {
 
 int main() {
     // Define the range of x values
-    double x_min = -10.0;
-    double x_max = 10.0;
+    double x_min = -20.0;
+    double x_max = 20.0;
     double step = (x_max - x_min) / (NUM_POINTS - 1);
 
     // Arrays to store x and y values
@@ -183,7 +183,7 @@ int main() {
     for (int i = 0; i < NUM_POINTS; i++) {
       printf("x: %.5lf, sinc(x): %.5lf, k_values:%.5lf\n ", x_values[i], y_values[i],k_values[i] );
     }
-
+    
     
 
       // Print the DFT coefficients
@@ -191,8 +191,7 @@ int main() {
     for (int i = 0; i < NUM_POINTS; i++) {
       printf("Real part: %.5lf, Imaginary part: %.5lf\n", dft[i][0], dft[i][1] );
     }
-
-    // Print the FT coefficients
+        // Print the FT coefficients
     printf("FT coefficients:\n");
     for (int i = 0; i < NUM_POINTS; i++) {
       printf("Real part: %.5lf, Imaginary part: %.5lf\n", creal(FT_values[i]), cimag(FT_values[i]) );
@@ -200,6 +199,14 @@ int main() {
     */
     // Free memory
     fftw_free(dft);
+
+    // Print the FT coefficients
+    
+    for (int i = 0; i < NUM_POINTS; i++) {
+      printf(" %.5lf\n", creal(FT_values[i]) );
+    }
+    
+    
 
     for (int i = 0; i < NUM_POINTS; i++) {
       FT[i]=creal(FT_values[i]) ;
@@ -212,5 +219,4 @@ int main() {
 
     return 0;
 }
-
 
