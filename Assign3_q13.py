@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,6 +13,16 @@ def sort_with_order(arr1, arr2):
     sorted_arr2 = [pair[1] for pair in sorted_pairs]
     
     return sorted_arr2
+
+def calculate_FT(data_points,dx=1,x_min=0):
+    dft_arr=np.fft.fft(data_points,norm="ortho") #dft f(k_q) 
+    k_arr=2*np.pi*np.fft.fftfreq(len(data_points),dx)
+    fk_arr=np.zeros(len(k_arr))  #initialising to save value of fourier transform of f(x)
+    for i in range(len(k_arr)): 
+        fk_arr[i]=np.abs(dx*np.sqrt(len(data_points)/(2*np.pi))*np.exp(-(1j)*k_arr[i]*x_min)*(dft_arr[i])) #x_min=0
+    return fk_arr
+
+    
 
 # Initialize an empty list to store data points
 data_points = []
@@ -37,7 +41,7 @@ plt.plot(range(1,n+1,1),data_points)
 plt.ylabel("Noise")
 plt.xlabel("count")
 plt.grid()
-plt.savefig("q13_noise")
+#plt.savefig("q13_noise")
 plt.show()
 
 dft_data=np.abs(np.fft.fft(data_points,norm="ortho")) #dft f(k_q)
@@ -47,28 +51,21 @@ plt.plot(np.sort(k_arr),sort_with_order(k_arr,dft_data))
 plt.ylabel("f'(k)")
 plt.xlabel("k")
 plt.grid()
-plt.savefig("DFT_noise")
+#plt.savefig("DFT_noise")
 plt.show()
 
-PS=np.square(np.abs(np.fft.fft(data_points,norm="ortho"))) 
+PS2=np.square(np.abs(calculate_FT(data_points)))
 plt.title("Power Spectrum")
-plt.plot(np.sort(k_arr),sort_with_order(k_arr,PS))
+plt.plot(np.sort(k_arr),sort_with_order(k_arr,PS2))
 plt.ylabel("PS(k)")
 plt.xlabel("k")
 plt.grid()
 plt.savefig("PS_noise")
 plt.show()
-
-
-    
-
-
-# In[2]:
-
-
+   
 num_bins = 10
-bin_size = len(PS) // num_bins
-binned_power_spectrum = [bin_size*np.mean(PS[i*bin_size:(i+1)*bin_size]) for i in range(num_bins)]
+bin_size = len(PS2) // num_bins
+binned_power_spectrum = [bin_size*np.mean(PS2[i*bin_size:(i+1)*bin_size]) for i in range(num_bins)]
 
 
 plt.figure(figsize=(10, 5))
@@ -79,10 +76,3 @@ plt.ylabel('Power')
 plt.grid()
 plt.savefig("Binned PS")
 plt.show()
-
-
-# In[ ]:
-
-
-
-
